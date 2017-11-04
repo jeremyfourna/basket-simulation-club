@@ -168,10 +168,8 @@ function clubName() {
   return generateName([adjectives, animals]);
 }
 
-function generateClub(userId, managedByUser = false) {
+function generateClub() {
   return {
-    userId,
-    managedByUser,
     id: generateId(),
     name: clubName(),
     proTeam: initTeam(12),
