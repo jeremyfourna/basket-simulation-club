@@ -1,44 +1,188 @@
 const R = require('ramda');
+const {
+  generateId,
+  generateName
+} = require('basket-simulation-utils');
+const { generatePlayer } = require('basket-simulation-player');
 
-function initClub(clubName, userId) {
+function clubName() {
+  // Names retrieved from http://listofrandomnames.com/
+  // Remove duplicates via https://www.textfixer.com/tools/remove-duplicate-lines.php
+  const adjectives = [
+    'Royal',
+    'Haunting',
+    'Fearless',
+    'Angry',
+    'Bright',
+    'Tough',
+    'Skeleton',
+    'Valiant',
+    'Determined',
+    'Steel',
+    'Storm',
+    'Regal',
+    'Majestic',
+    'Proud',
+    'Naughty',
+    'Mysterious',
+    'Brutal',
+    'True',
+    'Careless',
+    'Enchanted',
+    'Bold',
+    'Mean',
+    'Terrific',
+    'Mad',
+    'Gruesome',
+    'Stark',
+    'United',
+    'Grand',
+    'Hard',
+    'Loyal',
+    'Grim',
+    'Fiery',
+    'Thunder',
+    'Silent',
+    'Silver',
+    'Happy',
+    'Monstrous',
+    'Wild',
+    'Giant',
+    'Lucky',
+    'Young',
+    'Strong',
+    'Wicked',
+    'Classic',
+    'Creative',
+    'Bitter',
+    'Calm',
+    'Clever',
+    'Free',
+    'Blue',
+    'Dapper',
+    'Fabulous',
+    'White',
+    'Marvelous',
+    'Crazy',
+    'Colossal',
+    'Spectacular',
+    'Fast',
+    'Earnest',
+    'Hidden',
+    'Grave',
+    'Potent',
+    'Big',
+    'Brave',
+    'Powerful'
+  ];
+  const animals = [
+    'Parrots',
+    'Bulldogs',
+    'Zebras',
+    'Birds',
+    'Wizards',
+    'Ants',
+    'Gusts',
+    'Crickets',
+    'Saints',
+    'Donkeys',
+    'Wings',
+    'Raccoons',
+    'Bats',
+    'Nationals',
+    'Bullets',
+    'Warriors',
+    'Squirrels',
+    'Bees',
+    'Braves',
+    'Sabretooths',
+    'Ninjas',
+    'Riddles',
+    'Hammers',
+    'Crocodiles',
+    'Sharks',
+    'Rhinos',
+    'Dinos',
+    'Novas',
+    'Androids',
+    'Snowstorms',
+    'Turtles',
+    'Ocelots',
+    'Mallards',
+    'Mythics',
+    'Goats',
+    'Ferrets',
+    'Zombies',
+    'Doves',
+    'Legends',
+    'Kangaroos',
+    'Robins',
+    'Sirens',
+    'Dolphins',
+    'Elephants',
+    'Boulders',
+    'Pigeons',
+    'Coyotes',
+    'Deer',
+    'Mavericks',
+    'Alligators',
+    'Gorillas',
+    'Hedgehogs',
+    'Stags',
+    'Bottle',
+    'Rockets',
+    'Striders',
+    'Koalas',
+    'Blazers',
+    'Monarchs',
+    'Sliders',
+    'Vikings',
+    'Hounds',
+    'Creatures',
+    'Anacondas',
+    'Grizzlies',
+    'Mammoths',
+    'Foxes',
+    'Falcons',
+    'Jaguars',
+    'Hornets',
+    'Raiders',
+    'Toucans',
+    'Beluga',
+    'Whales',
+    'Pythons',
+    'Alphas',
+    'Leopards',
+    'Wreckers',
+    'Blazes',
+    'Howlers',
+    'Comets',
+    'Rovers',
+    'Cougars',
+    'Hawks',
+    'Monkeys',
+    'Gnomes',
+    'Turkeys'
+  ];
+
+  return generateName([adjectives, animals]);
+}
+
+function generateClub(userId, managedByUser = false) {
   return {
     userId,
+    managedByUser,
     id: generateId(),
-    proTeam: initPlayers(),
-    youthTeam: initPlayers(2)
+    name: clubName(),
+    proTeam: initTeam(12),
+    youthTeam: initTeam(10)
   };
 }
 
-function generateId() {
-  const id1 = Math.round(Math.random() * 1000000000);
-  const id2 = Math.round(Math.random() * 1000000000);
-  return Number(R.join('', [id1, id2]));
+function initTeam(nbPlayers) {
+  const range = R.range(0, nbPlayers);
+
+  return R.map(generatePlayer, range);
 }
 
-function initPlayers(teamLevel = 1) {
-
-  function generateTeam(num) {
-    function charact(min) {
-      return Math.floor(R.add(R.multiply(Math.random(), R.subtract(100, min)), min));
-    }
-
-    return R.map(() => ({
-      id: generateId(),
-      name: 'Mickael Jordan',
-      charact: {
-        ft: charact(R.divide(50, teamLevel)),
-        twoPts: charact(R.divide(30, teamLevel)),
-        threePts: charact(R.divide(20, teamLevel))
-      },
-      stats: {
-        ft: [0, 0],
-        twoPts: [0, 0],
-        threePts: [0, 0],
-        pts: 0,
-        eval: 0
-      }
-    }), R.range(0, num));
-  }
-
-  return generateTeam(10);
-}
+exports.generateClub = generateClub;
