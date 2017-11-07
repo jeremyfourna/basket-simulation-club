@@ -180,6 +180,3 @@ function initTeam(nbPlayers) {
 }
 
 exports.generateClub = generateClub;
-
-
-console.log(generateClub());
