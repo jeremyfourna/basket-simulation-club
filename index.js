@@ -1,8 +1,5 @@
 const R = require('ramda');
-const {
-  generateId,
-  generateName
-} = require('basket-simulation-utils');
+const { generateName } = require('basket-simulation-utils');
 const { generatePlayer } = require('basket-simulation-player');
 
 function clubName() {
@@ -170,7 +167,6 @@ function clubName() {
 
 function generateClub() {
   return {
-    id: generateId(),
     name: clubName(),
     proTeam: initTeam(12),
     youthTeam: initTeam(10)
@@ -184,3 +180,6 @@ function initTeam(nbPlayers) {
 }
 
 exports.generateClub = generateClub;
+
+
+console.log(generateClub());
