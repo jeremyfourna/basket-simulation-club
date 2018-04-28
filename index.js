@@ -1,7 +1,11 @@
-const R = require('ramda');
+const {
+  map,
+  range
+} = require('ramda');
 const { generateName } = require('basket-simulation-utils');
 const { generatePlayer } = require('basket-simulation-player');
 
+// clubName :: a -> string
 function clubName() {
   // Names retrieved from http://listofrandomnames.com/
   // Remove duplicates via https://www.textfixer.com/tools/remove-duplicate-lines.php
@@ -165,6 +169,7 @@ function clubName() {
   return generateName([adjectives, animals]);
 }
 
+// generateClub :: a -> object
 function generateClub() {
   return {
     name: clubName(),
@@ -173,10 +178,9 @@ function generateClub() {
   };
 }
 
+// initTeam :: number -> [object]
 function initTeam(nbPlayers) {
-  const range = R.range(0, nbPlayers);
-
-  return R.map(generatePlayer, range);
+  return map(generatePlayer, range(0, nbPlayers));
 }
 
 exports.generateClub = generateClub;
