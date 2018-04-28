@@ -2,7 +2,10 @@ const {
   map,
   range
 } = require('ramda');
-const { generateName } = require('basket-simulation-utils');
+const {
+  generateId,
+  generateName
+} = require('basket-simulation-utils');
 const { generatePlayer } = require('basket-simulation-player');
 
 // clubName :: a -> string
@@ -172,6 +175,7 @@ function clubName() {
 // generateClub :: a -> object
 function generateClub() {
   return {
+    id: generateId(),
     name: clubName(),
     proTeam: initTeam(12),
     youthTeam: initTeam(10)
